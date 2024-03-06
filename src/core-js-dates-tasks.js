@@ -31,8 +31,8 @@ function dateToTimestamp(date) {
  * Date(2023, 5, 1, 8, 20, 55) => '08:20:55'
  * Date(2015, 10, 20, 23, 15, 1) => '23:15:01'
  */
-function getTime(/* date */) {
-  throw new Error('Not implemented');
+function getTime(date) {
+  return date.toLocaleTimeString();
 }
 
 /**
@@ -46,8 +46,19 @@ function getTime(/* date */) {
  * '03 Dec 1995 00:12:00 UTC' => 'Sunday'
  * '2024-01-30T00:00:00.000Z' => 'Tuesday'
  */
-function getDayName(/* date */) {
-  throw new Error('Not implemented');
+function getDayName(date) {
+  const dayOfWeek = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ];
+  const parsedDay = new Date(date);
+  const numDay = parsedDay.getUTCDay();
+  return dayOfWeek[numDay];
 }
 
 /**
@@ -63,6 +74,11 @@ function getDayName(/* date */) {
  */
 function getNextFriday(/* date */) {
   throw new Error('Not implemented');
+  /* const currentDate = new Date(date);
+  const daysUntilFriday = (5 - currentDate.getUTCDay() + 7) % 7;
+  const nextFriday = new Date(currentDate);
+  nextFriday.setUTCDate(currentDate.getUTCDate() + daysUntilFriday);
+  return nextFriday; */
 }
 
 /**
@@ -76,8 +92,9 @@ function getNextFriday(/* date */) {
  * 1, 2024 => 31
  * 2, 2024 => 29
  */
-function getCountDaysInMonth(/* month, year */) {
-  throw new Error('Not implemented');
+function getCountDaysInMonth(month, year) {
+  const countOfDay = new Date(year, month, 0).getDate();
+  return countOfDay;
 }
 
 /**
