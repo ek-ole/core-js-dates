@@ -258,8 +258,9 @@ function getNextFridayThe13th(date) {
  * Date(2024, 5, 1) => 2
  * Date(2024, 10, 10) => 4
  */
-function getQuarter(/* date */) {
-  throw new Error('Not implemented');
+function getQuarter(date) {
+  const month = date.getMonth();
+  return Math.floor(month / 3) + 1;
 }
 
 /**
@@ -280,8 +281,29 @@ function getQuarter(/* date */) {
  * { start: '01-01-2024', end: '15-01-2024' }, 1, 3 => ['01-01-2024', '05-01-2024', '09-01-2024', '13-01-2024']
  * { start: '01-01-2024', end: '10-01-2024' }, 1, 1 => ['01-01-2024', '03-01-2024', '05-01-2024', '07-01-2024', '09-01-2024']
  */
-function getWorkSchedule(/* period, countWorkDays, countOffDays */) {
-  throw new Error('Not implemented');
+function getWorkSchedule(period, countWorkDays, countOffDays) {
+  const { start, end } = period;
+  const startDate = new Date(start.split('-').reverse().join('-'));
+  const endDate = new Date(end.split('-').reverse().join('-'));
+  const arr1 = new Array(countWorkDays).fill(1);
+  const arr2 = new Array(countOffDays).fill(0);
+  const arr = [...arr1, ...arr2];
+  let i = 0;
+  const schedule = [];
+  while (startDate.getTime() <= endDate.getTime()) {
+    if (arr[i]) {
+      let day = startDate.getDate();
+      day = day < 10 ? `0${day}` : day;
+      let month = startDate.getMonth() + 1;
+      month = month < 10 ? `0${month}` : month;
+      const year = startDate.getFullYear();
+      const dayStr = `${day}-${month}-${year}`;
+      schedule.push(dayStr);
+    }
+    startDate.setDate(startDate.getDate() + 1);
+    i = i === arr.length - 1 ? 0 : i + 1;
+  }
+  return schedule;
 }
 
 /**
