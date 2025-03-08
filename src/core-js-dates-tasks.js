@@ -233,7 +233,9 @@ function getNextFridayThe13th(date) {
   let month = currentDate.getMonth();
   let year = currentDate.getFullYear();
 
-  while (true) {
+  let attempts = 1200;
+
+  while (attempts > 0) {
     const day13 = new Date(year, month, 13);
     if (day13.getDay() === 5) {
       return day13;
@@ -244,7 +246,10 @@ function getNextFridayThe13th(date) {
       month = 0;
       year += 1;
     }
+    attempts -= 1;
   }
+
+  throw new Error('Unable to find a Friday the 13th within the given period.');
 }
 
 /**
